@@ -1,4 +1,10 @@
-import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  onSnapshot,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -27,6 +33,10 @@ const Contact = () => {
     });
   };
 
+  const handleDelete = async (id) => {
+    await deleteDoc(doc(db, "contactUsers", id));
+  };
+
   console.log(users);
 
   useEffect(() => {
@@ -51,6 +61,20 @@ const Contact = () => {
               <Company> {props.userCompany} </Company>
               <PhoneNo> {props.userPhoneNo} </PhoneNo>
             </OthersHold>
+            <ButtonHolder>
+              <Button1 bg="green" to={`${props.id}`}>
+                Edit
+              </Button1>
+              <Button
+                bg="red"
+                onClick={() => {
+                  console.log(props.id);
+                  handleDelete(props.id);
+                }}
+              >
+                Delete
+              </Button>
+            </ButtonHolder>
           </ContactHold>
         ))}
       </Wrapper>
@@ -59,6 +83,36 @@ const Contact = () => {
 };
 
 export default Contact;
+
+const Button1 = styled(Link)`
+  text-decoration: none;
+  background-color: ${({ bg }) => bg};
+  color: white;
+  margin: 5px 0;
+  padding: 10px;
+  transition: all 350ms;
+  transform: scale(1);
+
+  :hover {
+    transform: scale(1.02);
+    cursor: pointer;
+  }
+`;
+
+const Button = styled.div`
+  background-color: ${({ bg }) => bg};
+  color: white;
+  margin: 5px 0;
+  padding: 10px;
+  transition: all 350ms;
+  transform: scale(1);
+
+  :hover {
+    transform: scale(1.02);
+    cursor: pointer;
+  }
+`;
+const ButtonHolder = styled.div``;
 
 const Container = styled.div`
   height: 100%;

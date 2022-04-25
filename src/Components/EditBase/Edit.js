@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { db } from "../Firebase/Base";
+import { db } from "../Base/Base";
 
 import {
-    collection,
-    deleteDoc,
-    doc,
-    onSnapshot,
-    updateDoc,
-  } from "firebase/firestore";
-
-
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 
 const Edit = () => {
   const [name, setName] = useState("");
@@ -21,8 +19,6 @@ const Edit = () => {
     const newField = { fusr: newName, newEmail: newEmail };
     await updateDoc(userDoc, newField);
   };
-
-
 
   return (
     <div>
